@@ -25,7 +25,6 @@ export class WelcomeComponent implements OnInit {
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
       const val = this.validateForm.value;
 
       if (val.username && val.password) {

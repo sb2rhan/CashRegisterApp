@@ -1,22 +1,24 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, retry, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs';
 import { isBefore } from 'date-fns';
+import { RestApiService } from './rest-api.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-  apiURL = 'https://localhost:7123/api/v1/Authenticate/';
+export class AuthService extends RestApiService {
+  override apiURL = 'https://localhost:7123/api/v1/Authenticate/';
 
-  constructor(private http: HttpClient) { }
-    httpOptions = {
-      headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-  };
+  static TOKEN_KEY: string = "token";
+  static EXPIRATION: string = "expires_at";
+
+  constructor(protected http: HttpClient) {
+    super();
+  }
 
   login(username: string, password: string) {
+    debugger;
     return this.http.post(
       this.apiURL + "login",
       JSON.stringify({ "username": username, "password": password }),
@@ -24,33 +26,22 @@ export class AuthService {
     ).pipe(retry(1), catchError(this.handleError));
   }
 
-  handleError(error: any) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    window.alert(errorMessage);
-    return throwError(() => {
-      return errorMessage;
-    });
-  }
-
   setSession(token: string, expiration: string) {
-    localStorage.setItem('id_token', token);
-    localStorage.setItem("expires_at", expiration);
+    localStorage.setItem(AuthService.TOKEN_KEY, token);
+    localStorage.setItem(AuthService.EXPIRATION, expiration);
   }
 
   logout() {
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("expires_at");
+    localStorage.removeItem(AuthService.TOKEN_KEY);
+    localStorage.removeItem(AuthService.EXPIRATION);
   }
 
   isLoggedIn() {
-    return isBefore(new Date(), this.getExpiration());
+    const expires_at = this.getExpiration();
+    if (expires_at == null) {
+      return false;
+    }
+    return isBefore(new Date(), expires_at);
   }
 
   isLoggedOut() {
@@ -58,8 +49,8 @@ export class AuthService {
   }
 
   getExpiration() {
-    const expiration = localStorage.getItem("expires_at");
-    const expiresAt = JSON.parse(expiration ?? "");
-    return new Date(expiresAt);
-  }    
+    const expiration = localStorage.getItem(AuthService.EXPIRATION);
+    if (expiration == null) return null;
+    return new Date(expiration);
+  }
 }
