@@ -1,6 +1,7 @@
-<h1>Wecome to POS Software!</h1>
-<h3>Sign In</h3>
-<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+<div class="centered-form">
+  <h1 style="margin-bottom: 24px;">Wecome to POS Software!</h1>
+  <h2>Sign In</h2>
+  <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-control nzErrorTip="Please input your username!">
         <nz-input-group nzPrefixIcon="user">
@@ -16,14 +17,10 @@
       </nz-form-control>
     </nz-form-item>
     <!-- <div nz-row class="login-form-margin">
-      <div nz-col [nzSpan]="12">
-        <label nz-checkbox formControlName="remember">
-          <span>Remember me</span>
-        </label>
-      </div>
-      <div nz-col [nzSpan]="12">
+      <div nz-col [nzSpan]="24">
         <a class="login-form-forgot">Forgot password</a>
       </div>
     </div> -->
     <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
   </form>
+</div>

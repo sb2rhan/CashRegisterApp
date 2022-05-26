@@ -1,13 +1,13 @@
 import { HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
 
-export class RestApiService {
+export class ApiService {
 
   apiURL = 'https://localhost:7123/api/v1';
   
   httpOptions = {
     headers: new HttpHeaders({
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
     }),
   };
 

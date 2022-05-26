@@ -1,16 +1,23 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry } from 'rxjs';
 import { Purchase } from 'src/app/entities/purchase';
-import { RestApiService } from '../rest-api.service';
+import { ApiService } from '../api.service';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PurchasesService extends RestApiService {
+export class PurchasesService extends ApiService {
   override apiURL = 'https://localhost:7123/api/v1/Purchases/';
+  override httpOptions = {
+    headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${this.auth_service.getToken()}`
+    }),
+  };
 
-  constructor(protected http: HttpClient) {
+  constructor(protected http: HttpClient, private auth_service: AuthService) {
     super();
   }
 

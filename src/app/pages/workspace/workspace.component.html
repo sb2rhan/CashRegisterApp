@@ -1,1 +1,48 @@
-<p>workspace works!</p>
+<div nz-row>
+    <div nz-col nzSpan="12">
+        <h2>Products</h2>
+        <nz-table #basicTable [nzData]="scannedProducts">
+            <thead>
+                <tr>
+                    <th>Barcode</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data">
+                    <td>{{ data.barcode }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.description }}</td>
+                    <td>{{ data.price }}</td>
+                    <td>
+                        <a (click)="removeProduct(data)">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+    <div nz-col nzSpan="1"></div>
+    <div nz-col nzSpan="11">
+        <h2>Options</h2>
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="findProductByBarcode()">
+            <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+                <input formControlName="barcode" type="text" nz-input placeholder="Manually enter barcode" />
+            </nz-input-group>
+            <ng-template #suffixButton>
+                <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
+            </ng-template>
+        </form>
+        <nz-descriptions *ngIf="foundProduct != null" nzTitle="Found Product" nzBordered nzLayout="vertical">
+            <nz-descriptions-item nzTitle="Barcode">{{ foundProduct?.barcode }}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Name">{{ foundProduct?.name }}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Description">{{ foundProduct?.description }}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Price">{{ foundProduct?.price }}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Action">
+                <button (click)="addFoundProduct()" nz-button nzType="primary" nzSize="large">Add to purchase</button>
+            </nz-descriptions-item>
+        </nz-descriptions>
+    </div>
+</div>

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { catchError, retry } from 'rxjs';
 import { isBefore } from 'date-fns';
-import { RestApiService } from './rest-api.service';
+import { ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends RestApiService {
+export class AuthService extends ApiService {
   override apiURL = 'https://localhost:7123/api/v1/Authenticate/';
 
   static TOKEN_KEY: string = "token";
@@ -18,7 +18,6 @@ export class AuthService extends RestApiService {
   }
 
   login(username: string, password: string) {
-    debugger;
     return this.http.post(
       this.apiURL + "login",
       JSON.stringify({ "username": username, "password": password }),
@@ -52,5 +51,9 @@ export class AuthService extends RestApiService {
     const expiration = localStorage.getItem(AuthService.EXPIRATION);
     if (expiration == null) return null;
     return new Date(expiration);
+  }
+
+  getToken() {
+    return localStorage.getItem(AuthService.TOKEN_KEY);
   }
 }
