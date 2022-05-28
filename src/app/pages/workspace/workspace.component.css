@@ -1,0 +1,19 @@
+[nz-form] {
+    margin: 24px 0px;
+}
+
+nz-select {
+    width: 200px;
+}
+
+.workspace {
+    height: 70vh;
+}
+
+.quick-options {
+    margin-top: 20vh;
+}
+
+.total {
+    margin-top: 20px;
+}

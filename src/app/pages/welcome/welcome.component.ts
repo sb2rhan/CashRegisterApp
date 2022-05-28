@@ -31,7 +31,7 @@ export class WelcomeComponent implements OnInit {
         this.authService.login(val.username, val.password)
           .subscribe(
             (res: any) => {
-              this.authService.setSession(res.token, res.expiration);
+              this.authService.setSession(res.token, res.expiration, res.id);
               console.log("User is logged in");
               this.router.navigateByUrl('/workspace');
             }

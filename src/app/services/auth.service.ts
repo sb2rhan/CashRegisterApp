@@ -12,6 +12,7 @@ export class AuthService extends ApiService {
 
   static TOKEN_KEY: string = "token";
   static EXPIRATION: string = "expires_at";
+  static USER_ID: string = "user_id";
 
   constructor(protected http: HttpClient) {
     super();
@@ -25,14 +26,16 @@ export class AuthService extends ApiService {
     ).pipe(retry(1), catchError(this.handleError));
   }
 
-  setSession(token: string, expiration: string) {
+  setSession(token: string, expiration: string, user_id: string) {
     localStorage.setItem(AuthService.TOKEN_KEY, token);
     localStorage.setItem(AuthService.EXPIRATION, expiration);
+    localStorage.setItem(AuthService.USER_ID, user_id);
   }
 
   logout() {
     localStorage.removeItem(AuthService.TOKEN_KEY);
     localStorage.removeItem(AuthService.EXPIRATION);
+    localStorage.removeItem(AuthService.USER_ID);
   }
 
   isLoggedIn() {
@@ -55,5 +58,9 @@ export class AuthService extends ApiService {
 
   getToken() {
     return localStorage.getItem(AuthService.TOKEN_KEY);
+  }
+
+  getUserId() {
+    return localStorage.getItem(AuthService.USER_ID);
   }
 }

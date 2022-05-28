@@ -1,5 +1,5 @@
-<div nz-row>
-    <div nz-col nzSpan="12">
+<div nz-row class="workspace">
+    <div nz-col nzSpan="11">
         <h2>Products</h2>
         <nz-table #basicTable [nzData]="scannedProducts">
             <thead>
@@ -7,42 +7,75 @@
                     <th>Barcode</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Quantity</th>
                     <th>Price</th>
+                    <th>Amount</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data">
-                    <td>{{ data.barcode }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.description }}</td>
-                    <td>{{ data.price }}</td>
+                    <td>{{ data.product.barcode }}</td>
+                    <td>{{ data.product.name }}</td>
+                    <td>{{ data.product.description }}</td>
                     <td>
-                        <a (click)="removeProduct(data)">Delete</a>
+                        <input nz-input type="number" [valueAsNumber]="data.quantity" (change)="quantityChanged($event, data)">
+                    </td>
+                    <td>{{ data.product.price }}</td>
+                    <td>{{ data.product.price * data.quantity | number: '1.0-2' }}</td>
+                    <td>
+                        <a (click)="removeProduct(data.product)">Remove</a>
                     </td>
                 </tr>
             </tbody>
         </nz-table>
+        <nz-row class="total">
+            <nz-col [nzSpan]="12">
+                <nz-statistic [nzValue]="(taxes | number: '1.0-2')!" [nzTitle]="'Taxes (%)'"></nz-statistic>
+            </nz-col>
+            <nz-col [nzSpan]="12">
+                <nz-statistic [nzValue]="(total | number: '1.0-2')!" [nzTitle]="'Total without taxes (₸)'"></nz-statistic>
+                <nz-statistic [nzValue]="(totalWTaxes | number: '1.0-2')!" [nzTitle]="'Total (₸)'"></nz-statistic>
+            </nz-col>
+        </nz-row>
     </div>
     <div nz-col nzSpan="1"></div>
-    <div nz-col nzSpan="11">
+    <div nz-col nzSpan="12">
         <h2>Options</h2>
-        <form nz-form [formGroup]="validateForm" (ngSubmit)="findProductByBarcode()">
-            <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
-                <input formControlName="barcode" type="text" nz-input placeholder="Manually enter barcode" />
-            </nz-input-group>
-            <ng-template #suffixButton>
-                <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
-            </ng-template>
-        </form>
-        <nz-descriptions *ngIf="foundProduct != null" nzTitle="Found Product" nzBordered nzLayout="vertical">
-            <nz-descriptions-item nzTitle="Barcode">{{ foundProduct?.barcode }}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Name">{{ foundProduct?.name }}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Description">{{ foundProduct?.description }}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Price">{{ foundProduct?.price }}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Action">
-                <button (click)="addFoundProduct()" nz-button nzType="primary" nzSize="large">Add to purchase</button>
-            </nz-descriptions-item>
-        </nz-descriptions>
+        <div>
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="findProductByBarcode()">
+                <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+                    <input formControlName="barcode" type="text" nz-input placeholder="Manually enter barcode" />
+                </nz-input-group>
+                <ng-template #suffixButton>
+                    <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
+                </ng-template>
+            </form>
+            <nz-descriptions nzSize="small" nzTitle="Found Product" nzBordered nzLayout="vertical">
+                <nz-descriptions-item nzTitle="Barcode">{{ foundProduct?.barcode }}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Name">{{ foundProduct?.name }}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Description">{{ foundProduct?.description }}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Price">{{ foundProduct?.price }} ₸</nz-descriptions-item>
+                <nz-descriptions-item *ngIf="foundProduct != null" nzTitle="Action">
+                    <button (click)="addFoundProduct()" nz-button nzType="primary" nzSize="large">Add to
+                        purchase</button>
+                </nz-descriptions-item>
+            </nz-descriptions>
+        </div>
+        <nz-space nzSize="small" class="quick-options">
+            <nz-select *nzSpaceItem nzAllowClear nzPlaceHolder="Select Payment" [(ngModel)]="selectedPayment">
+                <nz-option nzCustomContent nzLabel="Cash" nzValue="CASH">
+                    <i nz-icon nzType="dollar" nzTheme="outline"></i>
+                    Cash
+                </nz-option>
+                <nz-option nzCustomContent nzLabel="Card" nzValue="CARD">
+                    <i nz-icon nzType="credit-card" nzTheme="outline"></i>
+                    Card
+                </nz-option>
+            </nz-select>
+            <button *nzSpaceItem nz-button nzType="primary">PRINT RECEIPT</button>
+            <button (click)="sendPurchase()" *nzSpaceItem nz-button nzType="default">SEND</button>
+            <!-- <button *nzSpaceItem nz-button nzType="dashed">Dashed</button> -->
+        </nz-space>
     </div>
 </div>

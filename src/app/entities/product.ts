@@ -10,3 +10,8 @@ export class Product {
     public supplierId!: string;
     public categoryId!: string;
 }
+
+export class ProductAmount {
+    constructor(public product: Product, public quantity: number = 1) {
+    }
+}
