@@ -84,8 +84,9 @@ export class WorkspaceComponent implements OnInit {
   quantityChanged($event: any, data: any) {
     debugger
     const prod = this.scannedProducts.find(p => p.product.barcode === data.product.barcode);
-    if (prod) {
-      prod.quantity = parseInt($event.target.value);
+    const q = parseInt($event.target.value);
+    if (prod && q > 0) {
+      prod.quantity = q;
       this.totalChanged();
     }
   }

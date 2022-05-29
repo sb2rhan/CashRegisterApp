@@ -7,14 +7,13 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-
 @NgModule({
   imports: [
     WelcomeRoutingModule,
     ReactiveFormsModule,
     NzFormModule,
     NzInputModule,
-    NzButtonModule
+    NzButtonModule,
   ],
   declarations: [WelcomeComponent],
   exports: [WelcomeComponent]

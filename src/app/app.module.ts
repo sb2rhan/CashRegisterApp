@@ -7,12 +7,15 @@ import { ru_RU } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import ru from '@angular/common/locales/ru';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { IconsProviderModule } from './icons-provider.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { InterceptorService } from './services/ui/interceptor.service';
 
 registerLocaleData(ru);
 
@@ -28,9 +31,14 @@ registerLocaleData(ru);
     AppRoutingModule,
     IconsProviderModule,
     NzLayoutModule,
-    NzMenuModule
+    NzMenuModule,
+    NzSpinModule,
+    NzIconModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: ru_RU }],
+  providers: [
+    { provide: NZ_I18N, useValue: ru_RU },
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

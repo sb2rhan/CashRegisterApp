@@ -8,7 +8,6 @@ const routes: Routes = [
                         canActivate: [AuthGuardService] },
   { path: 'workspace', loadChildren: () => import('./pages/workspace/workspace.module')
                         .then(m => m.WorkspaceModule), canActivate: [AuthGuardService] },
-
   // otherwise redirect to home
   { path: '**', redirectTo: '/workspace' }
 ];

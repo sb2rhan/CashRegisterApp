@@ -11,6 +11,10 @@
     </ul>
   </nz-header>
   <nz-content>
+    <div *ngIf="loaderService.isLoading | async" class="spinner-wrapper">
+      <ng-template #indicatorTemplate><i class="spinner" nz-icon nzType="loading"></i></ng-template>
+      <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+    </div>
     <div class="inner-content">
       <router-outlet></router-outlet>
     </div>

@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class WelcomeComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router) { }
 
   ngOnInit() {
@@ -32,11 +32,10 @@ export class WelcomeComponent implements OnInit {
           .subscribe(
             (res: any) => {
               this.authService.setSession(res.token, res.expiration, res.id);
-              console.log("User is logged in");
               this.router.navigateByUrl('/workspace');
             }
-      );
-    }
+          );
+      }
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {

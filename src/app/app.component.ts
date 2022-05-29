@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { LoaderService } from './services/ui/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,9 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  isCollapsed = false;
 
-  constructor(public auth_service: AuthService) {}
+  constructor(public auth_service: AuthService,
+    public loaderService: LoaderService) {}
 
   logout($event: any) {
     this.auth_service.logout();
