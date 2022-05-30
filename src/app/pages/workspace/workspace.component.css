@@ -7,11 +7,15 @@ nz-select {
 }
 
 .workspace {
-    height: 70vh;
+    min-height: 70vh;
 }
 
-.quick-options {
-    margin-top: 20vh;
+.main-options {
+    margin-top: 20px;
+}
+
+.main-options nz-space {
+    margin-top: 20px;
 }
 
 .total {

@@ -4,6 +4,7 @@ import { WorkspaceRoutingModule } from './workspace-routing.module';
 import { WorkspaceComponent } from './workspace.component';
 
 import { FormsModule } from '@angular/forms';
+import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -14,10 +15,12 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @NgModule({
   imports: [
     FormsModule,
+    NzFormModule,
     WorkspaceRoutingModule,
     ReactiveFormsModule,
     CommonModule,
@@ -28,7 +31,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzDescriptionsModule,
     NzSpaceModule,
     NzStatisticModule,
-    NzSelectModule
+    NzSelectModule,
+    NzInputNumberModule
   ],
   declarations: [WorkspaceComponent],
   exports: [WorkspaceComponent]

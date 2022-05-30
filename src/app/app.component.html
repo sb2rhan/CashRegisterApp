@@ -5,9 +5,18 @@
     </div>
     <ul nz-menu nzTheme="dark" nzMode="horizontal">
       <li nz-menu-item nzMatchRouter>
-        <a href="#" (click)="logout($event)">Logout</a>
+        <a nz-dropdown [nzDropdownMenu]="menu">
+          User
+          <i nz-icon nzType="user"></i>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item>
+              <a href="#" (click)="logout($event)">Logout</a>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
       </li>
-      <li nz-menu-item>Products</li>
     </ul>
   </nz-header>
   <nz-content>

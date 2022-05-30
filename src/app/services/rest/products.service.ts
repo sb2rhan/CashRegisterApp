@@ -38,4 +38,12 @@ export class ProductsService extends ApiService {
       .get<Product>(this.apiURL + 'barcode/' + barcode, this.httpOptions)
       .pipe(retry(1), catchError(this.handleError));
   }
+
+  updateProduct(id: string, newProd: Product) {
+    return this.http
+      .put<Product>(
+        this.apiURL + id, JSON.stringify(newProd), this.httpOptions
+      )
+      .pipe(retry(1), catchError(this.handleError));
+  }
 }

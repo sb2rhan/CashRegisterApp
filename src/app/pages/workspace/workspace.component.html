@@ -1,5 +1,5 @@
 <div nz-row class="workspace">
-    <div nz-col nzSpan="11">
+    <div nz-col nzSpan="14">
         <h2>Products</h2>
         <nz-table #basicTable [nzData]="scannedProducts">
             <thead>
@@ -9,6 +9,7 @@
                     <th>Description</th>
                     <th>Quantity</th>
                     <th>Price</th>
+                    <th>Discount</th>
                     <th>Amount</th>
                     <th>Action</th>
                 </tr>
@@ -19,10 +20,13 @@
                     <td>{{ data.product.name }}</td>
                     <td>{{ data.product.description }}</td>
                     <td>
-                        <input nz-input type="number" [valueAsNumber]="data.quantity" (change)="quantityChanged($event, data)">
+                        <nz-input-number [nzMin]="1" [nzPlaceHolder]="'Digital'" [ngModel]="data.quantity"
+                            (ngModelChange)="quantityChanged($event, data)"></nz-input-number>
+                        <!-- <input nz-input type="number" [valueAsNumber]="data.quantity" (change)="quantityChanged($event, data)"> -->
                     </td>
                     <td>{{ data.product.price }}</td>
-                    <td>{{ data.product.price * data.quantity | number: '1.0-2' }}</td>
+                    <td>{{ data.product.discountRate * 100 }}%</td>
+                    <td>{{ data.product.price * data.quantity * (1-data.product.discountRate) | number: '1.0-2' }}</td>
                     <td>
                         <a (click)="removeProduct(data.product)">Remove</a>
                     </td>
@@ -34,16 +38,17 @@
                 <nz-statistic [nzValue]="(taxes | number: '1.0-2')!" [nzTitle]="'Taxes (%)'"></nz-statistic>
             </nz-col>
             <nz-col [nzSpan]="12">
-                <nz-statistic [nzValue]="(total | number: '1.0-2')!" [nzTitle]="'Total without taxes (₸)'"></nz-statistic>
+                <nz-statistic [nzValue]="(total | number: '1.0-2')!" [nzTitle]="'Total without taxes (₸)'">
+                </nz-statistic>
                 <nz-statistic [nzValue]="(totalWTaxes | number: '1.0-2')!" [nzTitle]="'Total (₸)'"></nz-statistic>
             </nz-col>
         </nz-row>
     </div>
     <div nz-col nzSpan="1"></div>
-    <div nz-col nzSpan="12">
+    <div nz-col nzSpan="9">
         <h2>Options</h2>
-        <div>
-            <form nz-form [formGroup]="validateForm" (ngSubmit)="findProductByBarcode()">
+        <div class="manual-search">
+            <form nz-form [formGroup]="validateFormBarcode" (ngSubmit)="findProductByBarcode()">
                 <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
                     <input formControlName="barcode" type="text" nz-input placeholder="Manually enter barcode" />
                 </nz-input-group>
@@ -62,20 +67,28 @@
                 </nz-descriptions-item>
             </nz-descriptions>
         </div>
-        <nz-space nzSize="small" class="quick-options">
-            <nz-select *nzSpaceItem nzAllowClear nzPlaceHolder="Select Payment" [(ngModel)]="selectedPayment">
-                <nz-option nzCustomContent nzLabel="Cash" nzValue="CASH">
-                    <i nz-icon nzType="dollar" nzTheme="outline"></i>
-                    Cash
-                </nz-option>
-                <nz-option nzCustomContent nzLabel="Card" nzValue="CARD">
-                    <i nz-icon nzType="credit-card" nzTheme="outline"></i>
-                    Card
-                </nz-option>
-            </nz-select>
-            <button *nzSpaceItem nz-button nzType="primary">PRINT RECEIPT</button>
-            <button (click)="sendPurchase()" *nzSpaceItem nz-button nzType="default">SEND</button>
-            <!-- <button *nzSpaceItem nz-button nzType="dashed">Dashed</button> -->
-        </nz-space>
+        <form class="main-options" nz-form [formGroup]="validateFormPurchase" (ngSubmit)="sendPurchase()">
+            <nz-form-control>
+                <input formControlName="bonusCard" type="text" nz-input placeholder="Bonus Card (if there)" />
+            </nz-form-control>
+            <nz-space nzSize="small">
+                <nz-form-control *nzSpaceItem nzErrorTip="Please select payment type!">
+                    <nz-select formControlName="selectedPayment" nzAllowClear nzPlaceHolder="Select Payment">
+                        <nz-option nzCustomContent nzLabel="Cash" nzValue="CASH">
+                            <i nz-icon nzType="dollar" nzTheme="outline"></i>
+                            Cash
+                        </nz-option>
+                        <nz-option nzCustomContent nzLabel="Card" nzValue="CARD">
+                            <i nz-icon nzType="credit-card" nzTheme="outline"></i>
+                            Card
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+
+                <button (click)="printReceipt()" type="button" *nzSpaceItem nz-button nzType="default">PRINT RECEIPT</button>
+                <button *nzSpaceItem nz-button nzType="primary">SEND</button>
+                <!-- <button *nzSpaceItem nz-button nzType="dashed">Dashed</button> -->
+            </nz-space>
+        </form>
     </div>
 </div>

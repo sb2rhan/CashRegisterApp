@@ -27,6 +27,12 @@
   line-height: 64px;
 }
 
+nz-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+}
+
 nz-content {
   padding: 0 50px;
 }

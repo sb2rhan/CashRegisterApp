@@ -16,6 +16,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { InterceptorService } from './services/ui/interceptor.service';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 registerLocaleData(ru);
 
@@ -33,7 +34,8 @@ registerLocaleData(ru);
     NzLayoutModule,
     NzMenuModule,
     NzSpinModule,
-    NzIconModule
+    NzIconModule,
+    NzDropDownModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: ru_RU },
