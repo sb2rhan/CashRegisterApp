@@ -26,10 +26,10 @@ export class AuthService extends ApiService {
     ).pipe(retry(1), catchError(this.handleError));
   }
 
-  setSession(token: string, expiration: string, user_id: string) {
+  setSession(token: string, expiration: string, id: string, username: string) {
     localStorage.setItem(AuthService.TOKEN_KEY, token);
     localStorage.setItem(AuthService.EXPIRATION, expiration);
-    localStorage.setItem(AuthService.USER_ID, user_id);
+    localStorage.setItem(AuthService.USER_ID, `${id} ${username}`);
   }
 
   logout() {
@@ -61,6 +61,10 @@ export class AuthService extends ApiService {
   }
 
   getUserId() {
-    return localStorage.getItem(AuthService.USER_ID);
+    return localStorage.getItem(AuthService.USER_ID)?.split(' ')[0];
+  }
+
+  getUsername() {
+    return localStorage.getItem(AuthService.USER_ID)?.split(' ')[1];
   }
 }

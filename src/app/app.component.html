@@ -4,15 +4,15 @@
       <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
     </div>
     <ul nz-menu nzTheme="dark" nzMode="horizontal">
-      <li nz-menu-item nzMatchRouter>
+      <li *ngIf="isLogged" nz-menu-item nzMatchRouter>
         <a nz-dropdown [nzDropdownMenu]="menu">
-          User
+          {{ username }}
           <i nz-icon nzType="user"></i>
         </a>
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu nzSelectable>
             <li nz-menu-item>
-              <a href="#" (click)="logout($event)">Logout</a>
+              <a href="#" (click)="logout()">Logout</a>
             </li>
           </ul>
         </nz-dropdown-menu>
