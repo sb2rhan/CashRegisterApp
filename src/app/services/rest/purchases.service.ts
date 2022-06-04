@@ -9,7 +9,6 @@ import { AuthService } from '../auth.service';
   providedIn: 'root'
 })
 export class PurchasesService extends ApiService {
-  override apiURL = 'https://localhost:7123/api/v1/Purchases/';
   override httpOptions = {
     headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -19,6 +18,7 @@ export class PurchasesService extends ApiService {
 
   constructor(protected http: HttpClient, private auth_service: AuthService) {
     super();
+    this.apiURL = this.apiURL + 'Purchases/';
   }
 
   getPurchases(): Observable<Purchase> {

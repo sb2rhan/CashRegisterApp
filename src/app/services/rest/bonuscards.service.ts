@@ -9,7 +9,6 @@ import { AuthService } from '../auth.service';
   providedIn: 'root'
 })
 export class BonusCardsService extends ApiService {
-  override apiURL = 'https://localhost:7123/api/v1/BonusCards/';
   override httpOptions = {
     headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -19,6 +18,7 @@ export class BonusCardsService extends ApiService {
 
   constructor(protected http: HttpClient, private auth_service: AuthService) {
     super();
+    this.apiURL = this.apiURL + 'BonusCards/';
   }
 
   getBonusCard(id: string) {

@@ -3,9 +3,9 @@ import { throwError } from 'rxjs';
 
 export class ApiService {
 
-  apiURL = 'https://localhost:7123/api/v1';
+  protected apiURL = 'https://storesystemapi20220603185433.azurewebsites.net/api/v1/';
   
-  httpOptions = {
+  protected httpOptions = {
     headers: new HttpHeaders({
     'Content-Type': 'application/json'
     }),

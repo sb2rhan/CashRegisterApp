@@ -8,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService extends ApiService {
-  override apiURL = 'https://localhost:7123/api/v1/Authenticate/';
 
   static TOKEN_KEY: string = "token";
   static EXPIRATION: string = "expires_at";
@@ -16,6 +15,7 @@ export class AuthService extends ApiService {
 
   constructor(protected http: HttpClient) {
     super();
+    this.apiURL = this.apiURL + 'Authenticate/';
   }
 
   login(username: string, password: string) {
