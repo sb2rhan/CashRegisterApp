@@ -21,12 +21,6 @@ export class ProductsService extends ApiService {
     this.apiURL = this.apiURL + 'Products/';
   }
 
-  getProducts(): Observable<Product> {
-    return this.http
-      .get<Product>(this.apiURL, this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
   getProduct(id: string): Observable<Product> {
     return this.http
       .get<Product>(this.apiURL + id, this.httpOptions)

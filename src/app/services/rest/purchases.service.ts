@@ -21,12 +21,6 @@ export class PurchasesService extends ApiService {
     this.apiURL = this.apiURL + 'Purchases/';
   }
 
-  getPurchases(): Observable<Purchase> {
-    return this.http
-      .get<Purchase>(this.apiURL)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
   getPurchase(id: string): Observable<Purchase> {
     return this.http
       .get<Purchase>(this.apiURL + id)
