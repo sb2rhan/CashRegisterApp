@@ -73,7 +73,8 @@
             </nz-form-control>
             <nz-space nzSize="small">
                 <nz-form-control *nzSpaceItem nzErrorTip="Please select payment type!">
-                    <nz-select formControlName="selectedPayment" nzAllowClear nzPlaceHolder="Select Payment">
+                    <nz-select (ngModelChange)="paymentOptionChanged($event)" formControlName="selectedPayment"
+                        nzAllowClear nzPlaceHolder="Select Payment">
                         <nz-option nzCustomContent nzLabel="Cash" nzValue="CASH">
                             <i nz-icon nzType="dollar" nzTheme="outline"></i>
                             Cash
@@ -84,10 +85,16 @@
                         </nz-option>
                     </nz-select>
                 </nz-form-control>
+                <nz-form-control *nzSpaceItem [style.display]="selectedTypeCash ? 'block' : 'none'">
+                    <!-- <input formControlName="cash" type="number" nz-input placeholder="Customer cash" /> -->
+                    <nz-input-number style="width: 100%" formControlName="cash" [nzMin]="0" [nzPlaceHolder]="'Customer Cash'"></nz-input-number>
+                </nz-form-control>
+            </nz-space>
 
-                <button (click)="printReceipt()" type="button" *nzSpaceItem nz-button nzType="default">PRINT RECEIPT</button>
+            <nz-space nzSize="small">
+                <button (click)="printReceipt()" type="button" *nzSpaceItem nz-button nzType="default">PRINT
+                    RECEIPT</button>
                 <button *nzSpaceItem nz-button nzType="primary">SEND</button>
-                <!-- <button *nzSpaceItem nz-button nzType="dashed">Dashed</button> -->
             </nz-space>
         </form>
     </div>

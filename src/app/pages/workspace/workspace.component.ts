@@ -27,6 +27,8 @@ export class WorkspaceComponent implements OnInit {
   taxes: number = 10;
   totalWTaxes: number = 0;
 
+  selectedTypeCash: boolean = false;
+
   constructor(private fb: FormBuilder,
     private authService: AuthService,
     private pdfService: PdfMakerService,
@@ -40,7 +42,8 @@ export class WorkspaceComponent implements OnInit {
 
     this.validateFormPurchase = this.fb.group({
       bonusCard: [null, [Validators.nullValidator]],
-      selectedPayment: [null, [Validators.required]]
+      selectedPayment: [null, [Validators.required]],
+      cash: [null, [Validators.nullValidator]],
     })
   }
 
@@ -53,6 +56,14 @@ export class WorkspaceComponent implements OnInit {
       this.total += (sp.quantity * sp.product.price * (1.0000 - sp.product.discountRate));
     })
     this.totalWTaxes = this.total * (1 + this.taxes / 100);
+  }
+
+  paymentOptionChanged($event: string) {
+    if ($event === "CASH") {
+      this.selectedTypeCash = true;
+    } else {
+      this.selectedTypeCash = false;
+    }
   }
 
   addFoundProduct() {
@@ -94,36 +105,46 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
-  printReceipt() {
-    this.pdfService.print(this.scannedProducts, this.taxes, this.total, this.totalWTaxes);
+  printReceipt(cash?: number) {
+    if (this.selectedTypeCash && cash) {
+      this.pdfService.printPaymentCash(this.scannedProducts, this.taxes, this.total, this.totalWTaxes, cash);
+    } else {
+      this.pdfService.printPaymentCard(this.scannedProducts, this.taxes, this.total, this.totalWTaxes);
+    }
   }
 
   sendPurchase() {
     const cashier = this.authService.getUserId();
 
     if (this.validateFormPurchase.valid && this.totalWTaxes > 0 && cashier != null) {
-      const selectedPayment = this.validateFormPurchase.value.selectedPayment;
+      const selectedPayment: string = this.validateFormPurchase.value.selectedPayment;
       const bonusCard: string = this.validateFormPurchase.value.bonusCard;
 
       // bonus card check and applyDiscount() if it is;
 
       const purchase = new Purchase(this.totalWTaxes, selectedPayment,
         cashier, parseFloat((this.taxes / 100).toFixed(4)));
+      
+      if (selectedPayment === "CASH") {
+        purchase.cash = this.validateFormPurchase.value.cash;
+      }
 
       this.purchaseService.createPurchase(purchase)
         .subscribe(res => {
 
-          this.printReceipt();
+          this.printReceipt(res.cash);
 
           this.scannedProducts.forEach(p => {
             this.purchaseProductsService.createPurchaseProduct(
               new PurchaseProduct(p.product.id, res.id, p.quantity)
             ).subscribe(res => {
               p.product.stockAmount -= res.purchasedAmount;
+
               this.productsService.updateProduct(p.product.id, p.product)
                 .subscribe(res => {
                   this.scannedProducts = [];
                   this.totalChanged();
+                  this.paymentOptionChanged("");
                 });
             });
           });

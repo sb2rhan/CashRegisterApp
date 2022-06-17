@@ -1,5 +1,6 @@
 export class Purchase {
     public purchaseDate!: string;
+    public cash!: number;
 
     public id!: string;
     public bonusCardId!: string;
