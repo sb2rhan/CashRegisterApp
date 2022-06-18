@@ -89,7 +89,6 @@ export class WorkspaceComponent implements OnInit {
     if (barcode) {
       this.productsService.getProductByBarcode(barcode)
         .subscribe((res: Product) => {
-          console.log(res);
           this.foundProduct = res;
         })
     }

@@ -31,8 +31,12 @@ export class WelcomeComponent implements OnInit {
         this.authService.login(val.username, val.password)
           .subscribe(
             (res: any) => {
-              this.authService.setSession(res.token, res.expiration, res.id, res.username);
-              this.router.navigateByUrl('/workspace');
+              if (res.roles.find((r: string) => r == "Cashier")) {
+                this.authService.setSession(res.token, res.expiration, res.id, res.username);
+                this.router.navigateByUrl('/workspace');
+              } else {
+                alert('This user does not have a Cashier role');
+              }
             }
           );
       }
