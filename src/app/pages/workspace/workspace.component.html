@@ -60,17 +60,14 @@
                 <nz-descriptions-item nzTitle="Barcode">{{ foundProduct?.barcode }}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Name">{{ foundProduct?.name }}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Description">{{ foundProduct?.description }}</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="Price">{{ foundProduct?.price }} ₸</nz-descriptions-item>
-                <nz-descriptions-item *ngIf="foundProduct != null" nzTitle="Action">
+                <nz-descriptions-item nzTitle="Price (₸)">{{ foundProduct?.price }}</nz-descriptions-item>
+                <nz-descriptions-item *ngIf="foundProduct" nzTitle="Action">
                     <button (click)="addFoundProduct()" nz-button nzType="primary" nzSize="large">Add to
                         purchase</button>
                 </nz-descriptions-item>
             </nz-descriptions>
         </div>
         <form class="main-options" nz-form [formGroup]="validateFormPurchase" (ngSubmit)="sendPurchase()">
-            <nz-form-control>
-                <input formControlName="bonusCard" type="text" nz-input placeholder="Bonus Card (if there)" />
-            </nz-form-control>
             <nz-space nzSize="small">
                 <nz-form-control *nzSpaceItem nzErrorTip="Please select payment type!">
                     <nz-select (ngModelChange)="paymentOptionChanged($event)" formControlName="selectedPayment"

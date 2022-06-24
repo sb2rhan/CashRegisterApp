@@ -21,7 +21,7 @@ export class WorkspaceComponent implements OnInit {
   validateFormBarcode: FormGroup;
   validateFormPurchase: FormGroup;
 
-  foundProduct!: Product;
+  foundProduct!: Product | null;
   scannedProducts: ProductAmount[] = [];
   total: number = 0;
   taxes: number = 10;
@@ -41,7 +41,6 @@ export class WorkspaceComponent implements OnInit {
     });
 
     this.validateFormPurchase = this.fb.group({
-      bonusCard: [null, [Validators.nullValidator]],
       selectedPayment: [null, [Validators.required]],
       cash: [null, [Validators.nullValidator]],
     })
@@ -67,13 +66,16 @@ export class WorkspaceComponent implements OnInit {
   }
 
   addFoundProduct() {
-    const listed = this.scannedProducts.find(p => p.product.barcode === this.foundProduct.barcode);
-    if (!listed) {
-      this.scannedProducts = [...this.scannedProducts, new ProductAmount(this.foundProduct)];
-    } else {
-      listed.quantity++;
+    if (this.foundProduct) {
+      const listed = this.scannedProducts.find(p => p.product.barcode === this.foundProduct?.barcode);
+      if (!listed) {
+        this.scannedProducts = [...this.scannedProducts, new ProductAmount(this.foundProduct)];
+      } else {
+        listed.quantity++;
+      }
+      this.totalChanged();
     }
-    this.totalChanged();
+
   }
 
   removeProduct(c_product: any) {
@@ -91,6 +93,13 @@ export class WorkspaceComponent implements OnInit {
         .subscribe((res: Product) => {
           this.foundProduct = res;
         })
+    } else {
+      Object.values(this.validateFormBarcode.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
     }
   }
 
@@ -117,13 +126,10 @@ export class WorkspaceComponent implements OnInit {
 
     if (this.validateFormPurchase.valid && this.totalWTaxes > 0 && cashier != null) {
       const selectedPayment: string = this.validateFormPurchase.value.selectedPayment;
-      const bonusCard: string = this.validateFormPurchase.value.bonusCard;
-
-      // bonus card check and applyDiscount() if it is;
 
       const purchase = new Purchase(this.totalWTaxes, selectedPayment,
         cashier, parseFloat((this.taxes / 100).toFixed(4)));
-      
+
       if (selectedPayment === "CASH") {
         purchase.cash = this.validateFormPurchase.value.cash;
       }
@@ -143,6 +149,9 @@ export class WorkspaceComponent implements OnInit {
                 .subscribe(res => {
                   this.scannedProducts = [];
                   this.totalChanged();
+                  this.validateFormBarcode.reset();
+                  this.validateFormPurchase.reset();
+                  this.foundProduct = null;
                   this.paymentOptionChanged("");
                 });
             });
