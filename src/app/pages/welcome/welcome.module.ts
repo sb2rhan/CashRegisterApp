@@ -7,6 +7,8 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TranslateModule } from '@ngx-translate/core';
+
 @NgModule({
   imports: [
     WelcomeRoutingModule,
@@ -14,6 +16,9 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NzFormModule,
     NzInputModule,
     NzButtonModule,
+    TranslateModule.forChild({
+      extend: true
+    })
   ],
   declarations: [WelcomeComponent],
   exports: [WelcomeComponent]

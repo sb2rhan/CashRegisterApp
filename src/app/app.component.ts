@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { LoaderService } from './services/ui/loader.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,11 @@ export class AppComponent implements OnInit {
 
   constructor(public authService: AuthService,
     public loaderService: LoaderService,
-    public router: Router)
+    public router: Router,
+    private translate: TranslateService)
   {
+    translate.setDefaultLang('en');
+    translate.use('ru');
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd)
         if (val.url.includes("workspace")) {
@@ -35,4 +39,8 @@ export class AppComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+
+  useLanguage(language: string): void {
+    this.translate.use(language);
+}
 }

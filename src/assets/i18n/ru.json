@@ -1,0 +1,65 @@
+{
+    "navbar": {
+        "logout": "Закончить сессию"
+    },
+    "welcome": {
+        "greeting": "Добро пожаловать к POS системе!",
+        "signin": "Войдите в систему",
+        "form": {
+            "username": "Имя пользователя",
+            "password": "Пароль",
+            "submit": "Войти",
+            "errorTips": {
+                "username": "Введите имя пользователя!",
+                "password": "Введите свой пароль!"
+            }
+        }
+    },
+    "workspace": {
+        "leftPane": {
+            "productsText": "Продукты",
+            "mainInfo": {
+                "taxes": "Налог",
+                "total": "Итого",
+                "totalNoTaxes": "Итог без налога"
+            }
+        },
+        "rightPane": {
+            "optionsText": "Опции",
+            "manualSearch": {
+                "form": {
+                    "barcode": "Введите баркод",
+                    "submit": "Найти"
+                },
+                "tableTitle": "Найденный Продукт"
+            },
+            "mainForm": {
+                "selectedPayment": {
+                    "placeHolder": "Выберите платеж",
+                    "cash": "Наличные",
+                    "card": "Банковская карта",
+                    "customerCash": "Оплаченные деньги"
+                },
+                "errorTips": {
+                    "paymentType": "Пожалуйста, выберите платеж!"
+                },
+                "printReceipt": "ВЫВЕСТИ ЧЕК",
+                "submit": "ОТПРАВИТЬ"
+            }
+        },
+        "table": {
+            "barcode": "Баркод",
+            "name": "Название",
+            "description": "Описание",
+            "quantity": "Количество",
+            "price": "Цена",
+            "discount": "Скидка",
+            "amount": "Итого",
+            "action": {
+                "title": "Действие",
+                "remove": "Убрать",
+                "addPurchase": "Добавить в список"
+            }
+        }
+    }
+}

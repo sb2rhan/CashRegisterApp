@@ -1,18 +1,18 @@
 <div class="centered-form">
-  <h1 style="margin-bottom: 24px;">Wecome to POS Software!</h1>
-  <h2>Sign In</h2>
+  <h1 style="margin-bottom: 24px;">{{ 'welcome.greeting' | translate }}</h1>
+  <h2>{{ 'welcome.signin' | translate }}</h2>
   <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-control nzErrorTip="Please input your username!">
+      <nz-form-control nzErrorTip="{{ 'welcome.form.errorTips.username' | translate }}">
         <nz-input-group nzPrefixIcon="user">
-          <input type="text" nz-input formControlName="username" placeholder="Username" />
+          <input type="text" nz-input formControlName="username" placeholder="{{ 'welcome.form.username' | translate }}" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-control nzErrorTip="Please input your Password!">
+      <nz-form-control nzErrorTip="{{ 'welcome.form.errorTips.password' | translate }}">
         <nz-input-group nzPrefixIcon="lock">
-          <input type="password" nz-input formControlName="password" placeholder="Password" />
+          <input type="password" nz-input formControlName="password" placeholder="{{ 'welcome.form.password' | translate }}" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
@@ -21,6 +21,6 @@
         <a class="login-form-forgot">Forgot password</a>
       </div>
     </div> -->
-    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
+    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">{{ 'welcome.form.submit' | translate }}</button>
   </form>
 </div>

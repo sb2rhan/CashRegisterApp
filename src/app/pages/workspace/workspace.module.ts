@@ -16,6 +16,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -32,7 +33,10 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
     NzSpaceModule,
     NzStatisticModule,
     NzSelectModule,
-    NzInputNumberModule
+    NzInputNumberModule,
+    TranslateModule.forChild({
+      extend: true
+    })
   ],
   declarations: [WorkspaceComponent],
   exports: [WorkspaceComponent]

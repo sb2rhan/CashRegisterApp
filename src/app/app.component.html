@@ -4,7 +4,7 @@
       <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
     </div>
     <ul nz-menu nzTheme="dark" nzMode="horizontal">
-      <li *ngIf="isLogged" nz-menu-item nzMatchRouter>
+      <li *ngIf="isLogged" nz-menu-item>
         <a nz-dropdown [nzDropdownMenu]="menu">
           {{ username }}
           <i nz-icon nzType="user"></i>
@@ -12,8 +12,19 @@
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu nzSelectable>
             <li nz-menu-item>
-              <a href="#" (click)="logout()">Logout</a>
+              <a href="#" (click)="logout()">{{ 'navbar.logout' | translate }}</a>
             </li>
+          </ul>
+        </nz-dropdown-menu>
+      </li>
+      <li nz-menu-item>
+        <a nz-dropdown [nzDropdownMenu]="translationMenu">
+          <i nz-icon nzType="translation" nzTheme="outline"></i>
+        </a>
+        <nz-dropdown-menu #translationMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="useLanguage('en')">English</li>
+            <li nz-menu-item (click)="useLanguage('ru')">Русский</li>
           </ul>
         </nz-dropdown-menu>
       </li>

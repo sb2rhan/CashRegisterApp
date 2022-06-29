@@ -1,0 +1,65 @@
+{
+    "navbar": {
+        "logout": "Logout"
+    },
+    "welcome": {
+        "greeting": "Wecome to POS Software!",
+        "signin": "Sign in to the system",
+        "form": {
+            "username": "Username",
+            "password": "Password",
+            "submit": "Sign in",
+            "errorTips": {
+                "username": "Please input your username!",
+                "password": "Please input your Password!"
+            }
+        }
+    },
+    "workspace": {
+        "leftPane": {
+            "productsText": "Products",
+            "mainInfo": {
+                "taxes": "Taxes",
+                "total": "Total",
+                "totalNoTaxes": "Total without taxes"
+            }
+        },
+        "rightPane": {
+            "optionsText": "Options",
+            "manualSearch": {
+                "form": {
+                    "barcode": "Enter barcode",
+                    "submit": "Search"
+                },
+                "tableTitle": "Found Product"
+            },
+            "mainForm": {
+                "selectedPayment": {
+                    "placeHolder": "Select Payment",
+                    "cash": "Cash",
+                    "card": "Card",
+                    "customerCash": "Paid cash"
+                },
+                "errorTips": {
+                    "selectedPayment": "Please select payment type!"
+                },
+                "printReceipt": "PRINT RECEIPT",
+                "submit": "SEND"
+            }
+        },
+        "table": {
+            "barcode": "Barcode",
+            "name": "Name",
+            "description": "Description",
+            "quantity": "Quantity",
+            "price": "Price",
+            "discount": "Discount",
+            "amount": "Amount",
+            "action": {
+                "title": "Action",
+                "remove": "Remove",
+                "addPurchase": "Add to purchase"
+            }
+        }
+    }
+}
