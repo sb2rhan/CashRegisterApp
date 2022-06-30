@@ -48,6 +48,7 @@
             }
         },
         "table": {
+            "product": "Продукт",
             "barcode": "Баркод",
             "name": "Название",
             "description": "Описание",
@@ -60,6 +61,17 @@
                 "remove": "Убрать",
                 "addPurchase": "Добавить в список"
             }
+        },
+        "receipt": {
+            "heading": "Чек покупки",
+            "date": "Дата",
+            "billNum": "Номер",
+            "orderDetails": "Детали покупки",
+            "totalAmount": "Итог",
+            "totalWTaxes": "Итог, включая налоги({{taxRate}}%)",
+            "cash": "Оплачено наличными",
+            "change": "Сдача",
+            "discount": "Скидка: {{discount}}%"
         }
     }
 }

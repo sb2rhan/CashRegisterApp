@@ -48,6 +48,7 @@
             }
         },
         "table": {
+            "product": "Product",
             "barcode": "Barcode",
             "name": "Name",
             "description": "Description",
@@ -60,6 +61,17 @@
                 "remove": "Remove",
                 "addPurchase": "Add to purchase"
             }
+        },
+        "receipt": {
+            "heading": "RECEIPT",
+            "date": "Date",
+            "billNum": "Bill No",
+            "orderDetails": "Order Details",
+            "totalAmount": "Total Amount",
+            "totalWTaxes": "Total Amount with Tax({{taxRate}}%)",
+            "cash": "Cash",
+            "change": "Change",
+            "discount": "Discount: {{discount}}%"
         }
     }
 }

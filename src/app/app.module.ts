@@ -2,10 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { NZ_I18N } from 'ng-zorro-antd/i18n';
-import { ru_RU } from 'ng-zorro-antd/i18n';
-import { registerLocaleData } from '@angular/common';
-import ru from '@angular/common/locales/ru';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,9 +14,15 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { InterceptorService } from './services/ui/interceptor.service';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
-// import ngx-translate and the http loader
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+// i18n for ng-zorro
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { ru_RU } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import ru from '@angular/common/locales/ru';
+
+// ngx-translate and the http loader
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 registerLocaleData(ru);
 
@@ -32,13 +34,6 @@ registerLocaleData(ru);
     BrowserModule,
     // ngx-translate and the loader module
     HttpClientModule,
-    TranslateModule.forRoot({
-        loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-        }
-    }),
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -48,7 +43,14 @@ registerLocaleData(ru);
     NzMenuModule,
     NzSpinModule,
     NzIconModule,
-    NzDropDownModule
+    NzDropDownModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
   providers: [
     { provide: NZ_I18N, useValue: ru_RU },

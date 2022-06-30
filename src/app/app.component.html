@@ -20,6 +20,7 @@
       <li nz-menu-item>
         <a nz-dropdown [nzDropdownMenu]="translationMenu">
           <i nz-icon nzType="translation" nzTheme="outline"></i>
+          {{ currentLanguage }}
         </a>
         <nz-dropdown-menu #translationMenu="nzDropdownMenu">
           <ul nz-menu>
